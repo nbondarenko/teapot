@@ -10,6 +10,17 @@ class UsersController < ApplicationController
     end
   end
 
+  def sign_in
+    userToken = SecureRandom.uuid
+    @user = User.where(email: user_params[:email],  password: user_params[:password])
+    if !@user.nil?
+      session[:token] ||= userToken
+      render json: @user
+    else
+      @user.errors = 'No such user'
+      render json: { id: 0, errors: @user.errors }
+    end
+  end
   private
 
   def user_params
