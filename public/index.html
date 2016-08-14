@@ -10,6 +10,7 @@
     <!-- Latest compiled JavaScript -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
     <script src="/js/app.js"></script>
   </head>
 
@@ -17,7 +18,7 @@
     <div class="container">
       <h1>Hello</h1>
       <div  class="auth" ng-controller="SignupCtrl">
-        <form ng-submit="signUp()" ng-show="showAuth == true">
+        <form ng-submit="signUp()" ng-show="showContent == 'signup'">
           <div class="form-group">
             <label for="signup-email">E-mail</label>
             <input class="form-control" id="signup-email" type="email" ng-model="newUser.email">
@@ -32,7 +33,7 @@
             <input type="button" class="btn btn-default" ng-click='toggleSign()' value="sign in">
           </div>
         </form>
-        <form ng-submit="signIn()" ng-show="showAuth == false">
+        <form ng-submit="signIn()" ng-show="showContent == 'signin'">
           <div class="form-group">
             <label for="signup-email">E-mail</label>
             <input class="form-control" id="signup-email" type="email" ng-model="user.email">
@@ -47,7 +48,10 @@
             <input type="button" ng-click='toggleSign()' class="btn btn-default" value="sign up">
           </div>
         </form>
-        <div ng-show="showContent == true">Hello again</div>
+        <div ng-show="showContent == 'content'">
+          <p>Hello again</p>
+          <input type="button" ng-click='signOut()' class="btn btn-primary" value="Sign Out">
+        </div>
       </div>
   </div>
   </body>
