@@ -59,10 +59,17 @@
             <div class="form-group">
             <label for="array-first">Enter an array:</label>
             <textarea id="array-first"  class="form-control" rows="5" ng-model="arrayFirst"></textarea>
+            </div>
             <div class="for_errors">{{errors}}</div>
             <div class="for_errors">{{message}}</div>
             <input type="button" ng-click='calculateBasic()' class="btn btn-primary" value="Calculate">
-            </div>
+            <hr>
+            <p>Minimun: {{analyseResult.min}}</p>
+            <p>Maximum: {{analyseResult.max}}</p>
+            <p>Mean: {{analyseResult.avg}}</p>
+            <p>Median: {{analyseResult.median}}</p>
+            <p>Q1: {{analyseResult.q1}}</p>
+            <p>Q2: {{analyseResult.q2}}</p>
           </div>
         </div>
       </div>

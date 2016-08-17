@@ -2,15 +2,23 @@ class CalculationsController < ApplicationController
   before_action :check_null, :only => [:analyse]
   def analyse
     errors = []
+    respond = Hash.new
     err = check_array( data_params[:set1])
     if !err
           return render status: 422, json: {message: "invalid data"}
     end
+    set = data_params[:set1].collect{ |s| s.to_f}
+    respond[:min] = set.min
+    respond[:max] = set.max
+    respond[:avg] = mean(set)
+    respond[:median] = median(set)
+    respond[:q1] = q(set, 1)
+    respond[:q3] = q(set, 3)
+    return render status: 200, json: {answer: respond}
   end
 
   def check_array arr
     arr.each do |item|
-      debugger
       if !is_number?( item ) || has_space?( item )
         return false
       end
@@ -19,6 +27,24 @@ class CalculationsController < ApplicationController
   end
 
   private
+
+  def mean(array)
+    debugger
+	  array.inject(0) { |sum, x| sum += x } / array.size.to_f
+	end
+
+  def median(array)
+	  return nil if array.empty?
+	  array = array.sort
+	  m_pos = array.size / 2
+	  return array.size % 2 == 1 ? array[m_pos] : mean(array[m_pos-1..m_pos])
+	end
+
+  def q(array, step)
+    return nil if array.empty?
+    array = array.sort
+    return array[(((array.size+1) * step) / 4.0).round - 1]
+  end
 
   def is_number? string
     true if Float(string) rescue false

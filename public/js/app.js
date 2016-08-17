@@ -3,6 +3,8 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
   $scope.showContent = 'signup';
   $scope.showAuth = true;
   $scope.arrayFirst = "";
+  $scope.arraySecond = "";
+  $scope.analyseResult = [];
   function primaryAuth(){
     $http.post('/sign_in', { user: { primary: 'true'}}).then(function(response){
       $scope.showContent = response.data.hadAuth == true ? 'content' : 'signup';
@@ -51,7 +53,7 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
   function callbackAnalyseFunction(response) {
     debugger;
     if (response.status == 200){
-
+      $scope.analyseResult = response.data.answer;
     }else{
       $scope.errors = response.data.errors + " - " + response.status;
     }
