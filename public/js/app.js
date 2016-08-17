@@ -51,7 +51,6 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
     return str.split(",");
   }
   function callbackAnalyseFunction(response) {
-    debugger;
     if (response.status == 200){
       $scope.analyseResult = response.data.answer;
     }else{

@@ -12,8 +12,8 @@ class CalculationsController < ApplicationController
     respond[:max] = set.max
     respond[:avg] = mean(set)
     respond[:median] = median(set)
-    respond[:q1] = q(set, 1)
-    respond[:q3] = q(set, 3)
+    respond[:q1] = q1(set)
+    respond[:q3] = q3(set)
     return render status: 200, json: {answer: respond}
   end
 
@@ -29,7 +29,6 @@ class CalculationsController < ApplicationController
   private
 
   def mean(array)
-    debugger
 	  array.inject(0) { |sum, x| sum += x } / array.size.to_f
 	end
 
@@ -40,10 +39,20 @@ class CalculationsController < ApplicationController
 	  return array.size % 2 == 1 ? array[m_pos] : mean(array[m_pos-1..m_pos])
 	end
 
-  def q(array, step)
+  def q1(array)
     return nil if array.empty?
-    array = array.sort
-    return array[(((array.size+1) * step) / 4.0).round - 1]
+    arr = array.sort
+    return arr[0] if array.size == 3
+    m_pos = arr.size / 2
+    return median(arr[0...(m_pos+arr.size % 2)])
+  end
+
+  def q3(array)
+    return nil if array.empty?
+    arr = array.sort
+    return arr[2] if array.size == 3
+    m_pos = arr.size / 2
+    return median(arr[(m_pos-arr.size % 2)...arr.size])
   end
 
   def is_number? string
