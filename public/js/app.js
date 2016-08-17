@@ -2,6 +2,7 @@ var app = angular.module('myApp', ['ngCookies']);
 app.controller('SignupCtrl', function($scope, $http, $cookies) {
   $scope.showContent = 'signup';
   $scope.showAuth = true;
+  $scope.arrayFirst = "";
   function primaryAuth(){
     $http.post('/sign_in', { user: { primary: 'true'}}).then(function(response){
       $scope.showContent = response.data.hadAuth == true ? 'content' : 'signup';
@@ -10,9 +11,9 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
   primaryAuth();
   $scope.signUp = function(){
     $scope.errors = '';
-    if ($scope.newUser != null){
-      $http.post('/users', { user: { email: $scope.newUser.email, password: $scope.newUser.password } }).
-      then(callbackAddFunction);
+    if ($scope.user != null){
+      $http.post('/users', { user: { email: $scope.user.email, password: $scope.user.password } }).
+      then(callbackSignFunction);
     }
     else{
       $scope.errors = 'All fields must be filled';
@@ -22,7 +23,7 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
     $scope.errors = '';
     if ($scope.user != null){
       $http.post('/sign_in', { user: { email: $scope.user.email, password: $scope.user.password } }).
-      then(callbackSignInFunction);
+      then(callbackSignFunction);
     }
     else{
       $scope.errors = 'All fields must be filled';
@@ -41,16 +42,21 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
       $scope.showContent = 'signin'
     }
   };
-  function callbackAddFunction(response) {
-    if (response.data.id != 0) {
-      $scope.showContent = 'content';
-    } else {
-      $scope.errors = response.data.errors;
+  $scope.calculateBasic = function(){
+    $http.post('/calculate', {dataset: {set1: stringToArray($scope.arrayFirst)}}).then(callbackAnalyseFunction)
+  }
+  function stringToArray(str){
+    return str.split(",");
+  }
+  function callbackAnalyseFunction(response) {
+    debugger;
+    if (response.status == 200){
+
+    }else{
+      $scope.errors = response.data.errors + " - " + response.status;
     }
-    $scope.newUser.email = '';
-    $scope.newUser.password = '';
-  };
-  function callbackSignInFunction(response) {
+  }
+  function callbackSignFunction(response) {
     if (response.data.id != 0) {
       $scope.showContent = 'content';
     } else {

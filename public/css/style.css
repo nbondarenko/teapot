@@ -16,6 +16,19 @@ h1{
   padding: 20px;
   box-shadow: 0 1px 1px black;
 }
+.calculations{
+  width: 80%;
+  padding: 30px;
+  margin: auto;
+  background: #b3c2bf;
+  border-radius: 5px;
+  box-shadow: 0 1px 1px black;
+}
+.user-tab{
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
 .buttons{
   text-align: center;
 }

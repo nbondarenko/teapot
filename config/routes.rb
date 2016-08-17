@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   post 'users', to: 'users#create'
   delete 'users', to: 'users#destroy'
   post 'sign_in', to: 'users#sign_in'
+  post 'calculate', to: 'calculations#analyse'
 end
