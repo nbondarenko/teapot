@@ -56,6 +56,7 @@
             <input type="button" ng-click='signOut()' class="btn btn-primary" value="Sign Out">
           </div>
           <div class="basic">
+            <input type="button" value="Calc Correlation">
             <div class="form-group">
             <label for="array-first">Enter an array:</label>
             <textarea id="array-first"  class="form-control" rows="5" ng-model="arrayFirst"></textarea>
@@ -71,6 +72,20 @@
             <p>Q1: {{analyseResult.q1}}</p>
             <p>Q3: {{analyseResult.q3}}</p>
             <p>Outliers:</p><p ng-repeat="x in analyseResult.outl" >{{x}}  </p>
+          </div>
+          <div class="correlation">
+            <input type="button" value="To basic analysis">
+            <div class="form-group">
+            <label for="array-first">Enter an array:</label>
+            <textarea id="array-first"  class="form-control" rows="5" ng-model="arrayFirst"></textarea>
+            </div>
+            <div class="form-group">
+            <label for="array-first">Enter the second array:</label>
+            <textarea id="array-first"  class="form-control" rows="5" ng-model="arraySecond"></textarea>
+            </div>
+            <input type="button" ng-click='calculateCorellation()' class="btn btn-primary" value="Calculate">
+            <hr>
+            <p>Correlation Coefficient: {{analyseResult.coef}}</p>
           </div>
         </div>
       </div>

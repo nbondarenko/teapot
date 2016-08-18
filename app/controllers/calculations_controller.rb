@@ -1,7 +1,6 @@
 class CalculationsController < ApplicationController
-  before_action :check_null, :only => [:analyse]
+  before_action :check_null, :only => [:analyse, :correlate]
   def analyse
-    errors = []
     respond = Hash.new
     err = check_array( data_params[:set1])
     if !err
@@ -19,6 +18,31 @@ class CalculationsController < ApplicationController
     respond[:outl] = outliers(set, my_q1, my_q3)
     return render status: 200, json: {answer: respond}
   end
+  def correlate
+    respond = Hash.new
+    err = check_array( data_params[:set1]) && check_array(data_params[:set2])
+    err = err && data_params[:set1].size == data_params[:set2].size
+    if !err
+          return render status: 422, json: {message: "invalid data"}
+    end
+    set1 = data_params[:set1].collect{ |s| s.to_f}
+    set2 = data_params[:set2].collect{ |s| s.to_f}
+    x_m = mean(set1)
+    y_m = mean(set2)
+    prod = 0
+    x_sq = 0
+    y_sq = 0
+    set1.zip(set2).each do |x, y|
+      prod = prod + (x - x_m)*(y - y_m)
+      x_sq = x_sq + (x - x_m)**2
+      y_sq = y_sq + (y - y_m)**2
+    end
+    ro = prod / (Math.sqrt(x_sq)*Math.sqrt(y_sq))
+    respond[:coef] = ro
+    return render status: 200, json: {answer: respond}
+  end
+
+  private
 
   def check_array arr
     arr.each do |item|
@@ -28,8 +52,6 @@ class CalculationsController < ApplicationController
     end
     return arr.size >= 3
   end
-
-  private
 
   def mean(array)
 	  array.inject(0) { |sum, x| sum += x } / array.size.to_f
@@ -74,8 +96,8 @@ class CalculationsController < ApplicationController
   end
 
   def check_null
-    if data_params[:set1].nil?
-      return render status: 422, json: {message: "invalid data"}
+    data_params.each do |set|
+        return render status: 422, json: {message: "invalid data"} if set.nil?
     end
   end
   def data_params

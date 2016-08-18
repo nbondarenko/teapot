@@ -47,6 +47,9 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
   $scope.calculateBasic = function(){
     $http.post('/calculate', {dataset: {set1: stringToArray($scope.arrayFirst)}}).then(callbackAnalyseFunction)
   }
+  $scope.calculateCorellation = function(){
+    $http.post('/correlate', {dataset: {set1: stringToArray($scope.arrayFirst), set2: stringToArray($scope.arraySecond)}}).then(callbackAnalyseFunction)
+  }
   function stringToArray(str){
     return str.split(",");
   }

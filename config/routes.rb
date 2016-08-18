@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   delete 'users', to: 'users#destroy'
   post 'sign_in', to: 'users#sign_in'
   post 'calculate', to: 'calculations#analyse'
+  post 'correlate', to: 'calculations#correlate'
 end
