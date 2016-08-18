@@ -16,7 +16,7 @@ class CalculationsController < ApplicationController
     my_q3 = q3(set)
     respond[:q1] = my_q1
     respond[:q3] = my_q3
-    respond[:outl] = outliers(arr, my_q1, my_q3)
+    respond[:outl] = outliers(set, my_q1, my_q3)
     return render status: 200, json: {answer: respond}
   end
 
@@ -47,8 +47,7 @@ class CalculationsController < ApplicationController
     array = array.sort
     return array[0] if array.size == 3
     m_pos = array.size / 2
-    debugger
-    return median(array[0...(m_pos - array.size % 2)])
+    return median(array[0...(m_pos)])
   end
 
   def q3 (array)
@@ -56,8 +55,7 @@ class CalculationsController < ApplicationController
     array = array.sort
     return array[2] if array.size == 3
     m_pos = array.size / 2
-    debugger
-    return median(array[(m_pos + array.size % 2-1)...array.size])
+    return median(array[(m_pos + array.size % 2)..array.size])
   end
 
   def outliers ( array, q1, q3 )
