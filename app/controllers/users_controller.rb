@@ -14,8 +14,14 @@ class UsersController < ApplicationController
     if !user_params[:primary]
       @user = User.where(email: user_params[:email],  password: user_params[:password]).first
       if !@user.nil?
-        cookies[:token] = @user.token
-        render json: @user
+        userToken = SecureRandom.uuid
+        @user.token = userToken
+        if @user.save
+          cookies[:token] = @user.token
+          render json: @user
+        else
+          render json: {id: 0, errors: 'Error while singing in'}
+        end
       else
         render json: { id: 0, errors: 'No such user' }
       end

@@ -18,8 +18,8 @@
     <div class="container">
       <h1>Hello</h1>
       <div  ng-controller="SignupCtrl">
-        <div class="auth" ng-show="showContent != 'content'">
-          <form ng-submit="signUp()" ng-show="showContent == 'signup'">
+        <div class="loader" ng-show="showContent = 'load'"></div>
+          <form class="auth" ng-submit="signUp()" ng-show="showContent == 'signup'">
             <div class="form-group">
               <label for="signup-email">E-mail</label>
               <input class="form-control" id="signup-email" type="email" ng-model="user.email">
@@ -34,7 +34,7 @@
               <input type="button" class="btn btn-default" ng-click='toggleSign()' value="sign in">
             </div>
           </form>
-          <form ng-submit="signIn()" ng-show="showContent == 'signin'">
+          <form class="auth" ng-submit="signIn()" ng-show="showContent == 'signin'">
             <div class="form-group">
               <label for="signup-email">E-mail</label>
               <input class="form-control" id="signup-email" type="email" ng-model="user.email">
@@ -49,7 +49,6 @@
               <input type="button" ng-click='toggleSign()' class="btn btn-default" value="sign up">
             </div>
           </form>
-        </div>
         <div  class="calculations" ng-show="showContent == 'content'">
           <div class="user-tab">
             <p>Hello again</p>

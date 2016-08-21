@@ -1,6 +1,6 @@
 var app = angular.module('myApp', ['ngCookies']);
 app.controller('SignupCtrl', function($scope, $http, $cookies) {
-  $scope.showContent = 'signup';
+  $scope.showContent = 'loading';
   $scope.showAuth = true;
   $scope.arrayFirst = "";
   $scope.arraySecond = "";

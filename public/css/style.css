@@ -7,6 +7,9 @@ body{
 h1{
   color: red;
 }
+.loader{
+  background: url("/images/ajax-loader.gif") no-repeat 50%;
+}
 .auth{
   width: 70%;
   height: 300px;
