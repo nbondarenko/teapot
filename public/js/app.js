@@ -2,6 +2,7 @@ var app = angular.module('myApp', ['ngCookies']);
 app.controller('SignupCtrl', function($scope, $http, $cookies) {
   $scope.showContent = 'loading';
   $scope.showAuth = true;
+  $scope.isBasic = true;
   $scope.arrayFirst = "";
   $scope.arraySecond = "";
   $scope.analyseResult = [];
@@ -36,7 +37,6 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
     $http.delete('/users', { user: { token: $cookies.get('token')}}).then(callbackSignOutFunction);
   };
   $scope.toggleSign = function(){
-    $scope.showAuth = !$scope.showAuth;
     if($scope.showAuth){
       $scope.showContent = 'signup';
     }
@@ -44,6 +44,9 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
       $scope.showContent = 'signin'
     }
   };
+  $scope.toggleOperation = function(){
+    $scope.isBasic = !$scope.isBasic;
+  }
   $scope.calculateBasic = function(){
     $http.post('/calculate', {dataset: {set1: stringToArray($scope.arrayFirst)}}).then(callbackAnalyseFunction)
   }

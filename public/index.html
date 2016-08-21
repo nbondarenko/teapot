@@ -53,8 +53,8 @@
             <p>Hello again</p>
             <input type="button" ng-click='signOut()' class="btn btn-primary" value="Sign Out">
           </div>
-          <div class="basic">
-            <input type="button" value="Calc Correlation">
+          <div class="basic" ng-show="isBasic == true">
+            <input type="button" class="btn btn-default" value="Calc Correlation" ng-click="toggleOperation()">
             <div class="form-group">
             <label for="array-first">Enter an array:</label>
             <textarea id="array-first"  class="form-control" rows="5" ng-model="arrayFirst"></textarea>
@@ -71,8 +71,8 @@
             <p>Q3: {{analyseResult.q3}}</p>
             <p>Outliers:</p><p ng-repeat="x in analyseResult.outl" >{{x}}  </p>
           </div>
-          <div class="correlation">
-            <input type="button" value="To basic analysis">
+          <div class="correlation" ng-show="isBasic == false">
+            <input type="button" class="btn btn-default" value="To basic analysis" ng-click="toggleOperation()">
             <div class="form-group">
             <label for="array-first">Enter an array:</label>
             <textarea id="array-first"  class="form-control" rows="5" ng-model="arrayFirst"></textarea>
