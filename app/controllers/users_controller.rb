@@ -3,29 +3,29 @@ class UsersController < ApplicationController
     @user = User.new(email: user_params[:email], password: user_params[:password])
     @user.token = set_unique_token(@user)
     if @user.save
-      cookies[:token] = {value: @user.token, expires: 1.year.from_now}
-      render json: @user
+      cookies[:token] = { value: @user.token, expires: 1.year.from_now }
+      render json: @user, status: 200
     else
-      render json: { id: 0, errors: @user.errors.full_messages.join(', ') }
+      render json: { error: @user.errors.full_messages.join(', ') }, status: 400
     end
   end
 
   def sign_in
     if !user_params[:primary]
       if user_params[:email].blank? || user_params[:password].blank?
-        render json: {id: 0, errors: 'All fields must be filled'}
+        return render json: { error: 'All fields must be filled' }, status: 400
       end
       @user = User.where(email: user_params[:email],  password: user_params[:password]).first
       if !@user.nil?
         @user.token = set_unique_token(@user)
         if @user.save
-          cookies[:token] = {value: @user.token, expires: 1.year.from_now}
-          render status: 200, json: @user
+          cookies[:token] = { value: @user.token, expires: 1.year.from_now }
+          render json: @user, status: 200
         else
-          render json: {id: 0, errors: 'Error while singing in'}
+          render json: { error: 'Error while singing in'}, status: 400
         end
       else
-        render json: { id: 0, errors: 'No such user' }
+        render json: { error: 'No such user' }, status: 400
       end
     else
       if(!cookies[:token] || User.where(token: cookies[:token]).first.nil?)
@@ -35,9 +35,10 @@ class UsersController < ApplicationController
       end
     end
   end
+
   def destroy
     cookies.delete :token
-    render  status: 200, json: {}
+    render  status: 200
   end
 
   private
@@ -45,6 +46,7 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:email, :password, :primary)
   end
+
   def set_unique_token(user)
     userToken = ''
     loop do
@@ -53,5 +55,4 @@ class UsersController < ApplicationController
     end
     userToken
   end
-
 end

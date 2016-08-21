@@ -27,7 +27,7 @@
               <label for="signup-pass">Password</label>
               <input class="form-control" id="signup-pass"type="password" ng-model="user.password">
             </div>
-            <div class="for_errors">{{errors}}</div>
+            <div class="for_errors">{{errors.login}}</div>
             <div class="buttons">
               <input type="submit" class="btn btn-primary" value="Sign Up">
               <input type="button" class="btn btn-default" ng-click='toggleSign()' value="sign in">
@@ -42,7 +42,7 @@
               <label for="signup-pass">Password</label>
               <input class="form-control" id="signup-pass"type="password" ng-model="user.password">
             </div>
-            <div class="for_errors">{{errors}}</div>
+            <div class="for_errors">{{errors.login}}</div>
             <div class="buttons">
               <input type="submit" class="btn btn-primary" value="Sign In">
               <input type="button" ng-click='toggleSign()' class="btn btn-default" value="sign up">
@@ -59,7 +59,7 @@
             <label for="array-first">Enter an array:</label>
             <textarea id="array-first"  class="form-control" rows="5" ng-model="arrayFirst"></textarea>
             </div>
-            <div class="for_errors">{{errors}}</div>
+            <div class="for_errors">{{errors.analysis}}</div>
             <div class="for_errors">{{message}}</div>
             <input type="button" ng-click='calculateBasic()' class="btn btn-primary" value="Calculate">
             <hr>
@@ -81,6 +81,7 @@
             <label for="array-first">Enter the second array:</label>
             <textarea id="array-first"  class="form-control" rows="5" ng-model="arraySecond"></textarea>
             </div>
+            <div class="for_errors">{{errors.correlation}}</div>
             <input type="button" ng-click='calculateCorellation()' class="btn btn-primary" value="Calculate">
             <hr>
             <p>Correlation Coefficient: {{analyseResult.coef}}</p>

@@ -6,37 +6,61 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
   $scope.arrayFirst = "";
   $scope.arraySecond = "";
   $scope.analyseResult = [];
+  $scope.errors = [];
+
   function primaryAuth(){
-    $http.post('/sign_in', { user: { primary: 'true'}}).then(function(response){
+    $http.put('/sign_in', { user: { primary: 'true'}}).then(function(response){
       $scope.showContent = response.data.hadAuth == true ? 'content' : 'signup';
     });
   };
+
   primaryAuth();
+
   $scope.signUp = function(){
-    $scope.errors = '';
+    $scope.errors.login = '';
     if ($scope.user != null){
       $http.post('/users', { user: { email: $scope.user.email, password: $scope.user.password } }).
-      then(callbackSignFunction);
+      then(successCallbackSignFunction, errorCallbackSignFunction);
     }
     else{
-      $scope.errors = 'All fields must be filled';
+      $scope.errors.login = 'All fields must be filled';
     }
   };
+
   $scope.signIn = function(){
-    $scope.errors = '';
+    $scope.errors.login = '';
+    $scope.errors.correlation = '';
     if ($scope.user != null){
-      $http.post('/sign_in', { user: { email: $scope.user.email, password: $scope.user.password } }).
-      then(callbackSignFunction);
+      $http.put('/sign_in', { user: { email: $scope.user.email, password: $scope.user.password } }).
+      then(successCallbackSignFunction, errorCallbackSignFunction );
     }
     else{
-      $scope.errors = 'All fields must be filled';
+      $scope.errors.login = 'All fields must be filled';
     }
   };
+
   $scope.signOut = function(){
-    $scope.errors = '';
-    $http.delete('/users', { user: { token: $cookies.get('token')}}).then(callbackSignOutFunction);
+    $scope.errors.login = '';
+    $http.delete('/users', { user: { token: $cookies.get('token')}}).then(successCallbackSignOutFunction);
   };
+
+  $scope.calculateBasic = function(){
+    $scope.errors.analysis = '';
+    $http.post('/calculate', {dataset: {set1: stringToArray($scope.arrayFirst)}})
+    .then(successCallbackAnalyseFunction, errorCallbackAnalyseFunction)
+  };
+
+  $scope.calculateCorellation = function(){
+    $http.post('/correlate', {dataset: {set1: stringToArray($scope.arrayFirst), set2: stringToArray($scope.arraySecond)}})
+    .then(successCallbackAnalyseFunction, errorCallbackAnalyseFunction)
+  };
+
+  function stringToArray(str){
+    return str.split(",");
+  };
+
   $scope.toggleSign = function(){
+    $scope.showAuth = !$scope.showAuth;
     if($scope.showAuth){
       $scope.showContent = 'signup';
     }
@@ -44,37 +68,32 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
       $scope.showContent = 'signin'
     }
   };
+
   $scope.toggleOperation = function(){
     $scope.isBasic = !$scope.isBasic;
-  }
-  $scope.calculateBasic = function(){
-    $http.post('/calculate', {dataset: {set1: stringToArray($scope.arrayFirst)}}).then(callbackAnalyseFunction)
-  }
-  $scope.calculateCorellation = function(){
-    $http.post('/correlate', {dataset: {set1: stringToArray($scope.arrayFirst), set2: stringToArray($scope.arraySecond)}}).then(callbackAnalyseFunction)
-  }
-  function stringToArray(str){
-    return str.split(",");
-  }
-  function callbackAnalyseFunction(response) {
-    if (response.status == 200){
-      $scope.analyseResult = response.data.answer;
-    }else{
-      $scope.errors = response.data.errors + " - " + response.status;
-    }
-  }
-  function callbackSignFunction(response) {
-    if (response.data.errors) {
-      $scope.errors = response.data.errors;
-    } else {
-      $scope.showContent = 'content';
-    }
+  };
+
+  function successCallbackSignFunction(response){
+    $scope.showContent = 'content';
     $scope.user.email = '';
     $scope.user.password = '';
   };
-  function callbackSignOutFunction(response){
-    if(response.status == 200){
-      $scope.showContent = 'signin';
-    };
+
+  function errorCallbackSignFunction(response){
+    debugger;
+    $scope.errors.login = response.data.error;
+  }
+
+  function successCallbackSignOutFunction(response){
+    $scope.showContent = 'signin';
+  };
+
+  function successCallbackAnalyseFunction(response){
+    $scope.analyseResult = response.data.answer;
+  };
+
+  function errorCallbackAnalyseFunction(response){
+    $scope.errors.analysis = response.data.error;
+    $scope.errors.correlation = response.data.error;
   };
 });
