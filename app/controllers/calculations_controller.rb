@@ -1,5 +1,5 @@
 class CalculationsController < ApplicationController
-  before_action :check_null, :only => [:analyse, :correlate]
+  before_action :check_null, :only [:analyse, :correlate]
   def analyse
     respond = Hash.new
     err = check_array( data_params[:set1])

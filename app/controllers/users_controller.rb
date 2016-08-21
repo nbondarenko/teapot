@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
   def create
-    userToken = SecureRandom.uuid
-    @user = User.new(email: user_params[:email], password: user_params[:password], token: userToken)
+    @user = User.new(email: user_params[:email], password: user_params[:password])
+    @user.token = set_unique_token(@user)
     if @user.save
-      cookies[:token] = userToken
+      cookies[:token] = {value: @user.token, expires: 1.year.from_now}
       render json: @user
     else
       render json: { id: 0, errors: @user.errors.full_messages.join(', ') }
@@ -12,13 +12,15 @@ class UsersController < ApplicationController
 
   def sign_in
     if !user_params[:primary]
+      if user_params[:email].blank? || user_params[:password].blank?
+        render json: {id: 0, errors: 'All fields must be filled'}
+      end
       @user = User.where(email: user_params[:email],  password: user_params[:password]).first
       if !@user.nil?
-        userToken = SecureRandom.uuid
-        @user.token = userToken
+        @user.token = set_unique_token(@user)
         if @user.save
-          cookies[:token] = @user.token
-          render json: @user
+          cookies[:token] = {value: @user.token, expires: 1.year.from_now}
+          render status: 200, json: @user
         else
           render json: {id: 0, errors: 'Error while singing in'}
         end
@@ -34,12 +36,22 @@ class UsersController < ApplicationController
     end
   end
   def destroy
-    cookies.delete('token');
-    render json: {}
+    cookies.delete :token
+    render  status: 200, json: {}
   end
+
   private
 
   def user_params
     params.require(:user).permit(:email, :password, :primary)
   end
+  def set_unique_token(user)
+    userToken = ''
+    loop do
+      userToken = SecureRandom.uuid
+      break unless User.exists?(token: userToken)
+    end
+    userToken
+  end
+
 end

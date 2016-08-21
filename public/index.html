@@ -16,9 +16,8 @@
 
   <body>
     <div class="container">
-      <h1>Hello</h1>
       <div  ng-controller="SignupCtrl">
-        <div class="loader" ng-show="showContent = 'load'"></div>
+        <div class="loader" ng-show="showContent == 'loading'"></div>
           <form class="auth" ng-submit="signUp()" ng-show="showContent == 'signup'">
             <div class="form-group">
               <label for="signup-email">E-mail</label>

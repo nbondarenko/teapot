@@ -61,10 +61,10 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
     }
   }
   function callbackSignFunction(response) {
-    if (response.data.id != 0) {
-      $scope.showContent = 'content';
-    } else {
+    if (response.data.errors) {
       $scope.errors = response.data.errors;
+    } else {
+      $scope.showContent = 'content';
     }
     $scope.user.email = '';
     $scope.user.password = '';
