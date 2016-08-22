@@ -6,14 +6,80 @@ body{
 .loader{
   background: url("/images/ajax-loader.gif") no-repeat 50%;
 }
-.auth{
-  width: 70%;
-  height: 300px;
-  margin: auto;
-  background: #b3c2bf;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 0 1px 1px black;
+.auth-wraper{
+  display: block;
+  background: #FFF;
+  position: relative;
+  max-width: 550px;
+  border-radius: 4px;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.2);
+  margin: 120px auto;
+}
+ul{
+  height: 72px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+ul li a{
+  width: 50%;
+  position: relative;
+  float: left;
+  text-align: center;
+  background: #D2D8D8;
+  line-height: 72px;
+  height: 100%;
+  text-decoration: none;
+  color: #809191;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+ul li a:hover, ul li a:hover{
+  text-decoration: none;
+  color: #809191;
+}
+ul li.current a{
+  background: #FFF;
+  color: #333;
+}
+form{
+  width: 100%;
+  height: auto;
+}
+form p{
+  line-height: 48px;
+  text-align: center;
+  padding: 12px;
+  font-size: 15px;
+  color: #888;
+  border-bottom: 1px solid #e5e5e5;
+}
+form .form-group{
+    height: 71px;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 2px 24px;
+}
+form .form-group label{
+  text-transform: uppercase;
+  font-size: 12px;
+}
+form .form-group input{
+  line-height: 19px;
+  border: none;
+  font-size: 15px;
+  outline: none;
+  box-shadow: none;
+  padding-left: 0;
+  color: rgba(75, 89, 102, 0.85);
+}
+.for-errors{
+  height: 71px;
+  padding: 11px 24px;
+}
+.buttons{
+  padding: 15px;
 }
 .calculations{
   width: 80%;

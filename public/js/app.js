@@ -9,7 +9,7 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
   $scope.errors = [];
 
   function primaryAuth(){
-    $http.put('/sign_in', { user: { primary: 'true'}}).then(function(response){
+    $http.put('/sign_in_primary', { user: { primary: 'true'}}).then(function(response){
       $scope.showContent = response.data.hadAuth == true ? 'content' : 'signup';
     });
   };
@@ -59,6 +59,12 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
     return str.split(",");
   };
 
+  $scope.showAuthTab = function(){
+    return $scope.showContent == 'signup' || $scope.showContent == 'signin'
+  }
+
+  
+
   $scope.toggleSign = function(){
     $scope.showAuth = !$scope.showAuth;
     if($scope.showAuth){
@@ -80,7 +86,6 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
   };
 
   function errorCallbackSignFunction(response){
-    debugger;
     $scope.errors.login = response.data.error;
   }
 

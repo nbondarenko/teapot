@@ -11,28 +11,28 @@ class UsersController < ApplicationController
   end
 
   def sign_in
-    if !user_params[:primary]
-      if user_params[:email].blank? || user_params[:password].blank?
-        return render json: { error: 'All fields must be filled' }, status: 400
-      end
-      @user = User.where(email: user_params[:email],  password: user_params[:password]).first
-      if !@user.nil?
-        @user.token = set_unique_token(@user)
-        if @user.save
-          cookies[:token] = { value: @user.token, expires: 1.year.from_now }
-          render json: @user, status: 200
-        else
-          render json: { error: 'Error while singing in'}, status: 400
-        end
+    if user_params[:email].blank? || user_params[:password].blank?
+      return render json: { error: 'All fields must be filled' }, status: 400
+    end
+    @user = User.where(email: user_params[:email],  password: user_params[:password]).first
+    if @user.present?
+      @user.token = set_unique_token(@user)
+      if @user.save
+        cookies[:token] = { value: @user.token, expires: 1.year.from_now }
+        render json: @user, status: 200
       else
-        render json: { error: 'No such user' }, status: 400
+        render json: { error: 'Error has occured while singing in'}, status: 400
       end
     else
-      if(!cookies[:token] || User.where(token: cookies[:token]).first.nil?)
-        render json: { hadAuth: false }
-      else
-        render json: { hadAuth: true }
-      end
+      render json: { error: 'No such user' }, status: 400
+    end
+  end
+
+  def sign_in_primary
+    if(cookies[:token] && User.where(token: cookies[:token]).first.present?)
+      render json: { hadAuth: true }, status: 200
+    else
+      render json: { hadAuth: false }, status: 200
     end
   end
 

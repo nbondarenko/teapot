@@ -3,32 +3,27 @@ class CalculationsController < ApplicationController
 
   def analyse
     respond = Hash.new
-    err = check_array( data_params[:set1])
-    if !err
-      return render json: {error: "invalid data", status: 400}, status: 400
-    end
+    valid_array = check_array(data_params[:set1])
+    return render json: { error: "invalid data", status: 400 }, status: 400 unless valid_array
     set = data_params[:set1].collect{ |s| s.to_f}
     respond[:min] = set.min
     respond[:max] = set.max
     respond[:avg] = mean(set)
     respond[:median] = median(set)
-    my_q1 = q1(set)
-    my_q3 = q3(set)
-    respond[:q1] = my_q1
-    respond[:q3] = my_q3
-    respond[:outl] = outliers(set, my_q1, my_q3)
+    first_quartilie = q1(set)
+    third_quartilie = q3(set)
+    respond[:q1] = first_quartilie
+    respond[:q3] = third_quartilie
+    respond[:outl] = outliers(set, first_quartilie, third_quartilie)
     render json: {answer: respond}, status: 200
   end
 
   def correlate
     respond = Hash.new
-    err = check_array( data_params[:set1]) && check_array(data_params[:set2])
-    err = err && data_params[:set1].size == data_params[:set2].size
-    if !err
-      return render json: {error: "invalid data", status: 400}, status: 400
-    end
-    set1 = data_params[:set1].collect{ |s| s.to_f}
-    set2 = data_params[:set2].collect{ |s| s.to_f}
+    valid_set = check_array(data_params[:set1]) && check_array(data_params[:set2]) && data_params[:set1].size == data_params[:set2].size
+    return render json: { error: "invalid data", status: 400 }, status: 400 unless valid_set
+    set1 = data_params[:set1].collect{ |s| s.to_f }
+    set2 = data_params[:set2].collect{ |s| s.to_f }
     x_m = mean(set1)
     y_m = mean(set2)
     prod = 0
@@ -48,11 +43,9 @@ class CalculationsController < ApplicationController
 
   def check_array(arr)
     arr.each do |item|
-      if !is_number?(item) || has_space?(item)
-        return false
-      end
+      return false if !is_number?(item) || has_space?(item)
     end
-    return arr.size >= 3
+    arr.size >= 3
   end
 
   def mean(array)
@@ -63,7 +56,7 @@ class CalculationsController < ApplicationController
 	  return nil if array.empty?
 	  array = array.sort
 	  m_pos = array.size / 2
-	  return array.size % 2 == 1 ? array[m_pos] : mean(array[m_pos-1..m_pos])
+	  array.size % 2 == 1 ? array[m_pos] : mean(array[m_pos-1..m_pos])
 	end
 
   def q1(array)
@@ -71,7 +64,7 @@ class CalculationsController < ApplicationController
     array = array.sort
     return array[0] if array.size == 3
     m_pos = array.size / 2
-    return median(array[0...(m_pos)])
+    median(array[0...(m_pos)])
   end
 
   def q3(array)
@@ -79,14 +72,14 @@ class CalculationsController < ApplicationController
     array = array.sort
     return array[2] if array.size == 3
     m_pos = array.size / 2
-    return median(array[(m_pos + array.size % 2)..array.size])
+    median(array[(m_pos + array.size % 2)..array.size])
   end
 
   def outliers(array, q1, q3)
     iqr = q3 - q1
     h_value = q3 + 1.5*iqr
     l_value = q1 - 1.5*iqr
-    return array.select { |item| item > h_value || item < l_value}
+    array.select { |item| item > h_value || item < l_value}
   end
 
   def is_number?(string)
@@ -99,9 +92,10 @@ class CalculationsController < ApplicationController
 
   def check_null
     data_params.each do |set|
-        return render json: {error: "invalid data", status: 400}, status: 400 if set.nil?
+      return render json: {error: "invalid data", status: 400}, status: 400 if set.nil?
     end
   end
+
   def data_params
     params.require(:dataset)
   end
