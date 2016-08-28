@@ -7,6 +7,7 @@ This is a simple single-page application powered by Ruby on Rails and AngularJS 
 * App is based on JSON API implemented using Ruby on Rails
 * Handling responses using AngularJS
 * Simple user authorization
+
 ###Usage
 You can make use of the application only if you are an authorizated user.
 This README would normally document whatever steps are necessary to get the
