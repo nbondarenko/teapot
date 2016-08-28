@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     @user.token = set_unique_token(@user)
     if @user.save
       cookies[:token] = { value: @user.token, expires: 1.year.from_now }
-      render json: @user, status: 200
+      render json: @user, status: 201
     else
       render json: { error: @user.errors.full_messages.join(', ') }, status: 400
     end
@@ -30,21 +30,28 @@ class UsersController < ApplicationController
 
   def sign_in_primary
     if(cookies[:token] && User.where(token: cookies[:token]).first.present?)
-      render json: { hadAuth: true }, status: 200
+      @user = User.where(token: cookies[:token]).first
+      render json: { user: @user,  hadAuth: true }, status: 200
     else
       render json: { hadAuth: false }, status: 200
     end
   end
 
   def destroy
-    cookies.delete :token
-    render  status: 200
+    user = User.find(params[:id])
+    if user
+      cookies.delete :token
+      user.update_column(:token, nil)
+      render  status: 200
+    else
+      render status: 400
+    end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :primary)
+    params.require(:user).permit(:id, :email, :password, :primary)
   end
 
   def set_unique_token(user)

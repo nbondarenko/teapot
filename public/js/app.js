@@ -3,6 +3,7 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
   $scope.showContent = 'loading';
   $scope.showAuth = true;
   $scope.isBasic = true;
+  $scope.userId = null;
   $scope.arrayFirst = "";
   $scope.arraySecond = "";
   $scope.analyseResult = [];
@@ -11,6 +12,7 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
   function primaryAuth(){
     $http.put('/sign_in_primary', { user: { primary: 'true'}}).then(function(response){
       $scope.showContent = response.data.hadAuth == true ? 'content' : 'signup';
+      $scope.userId = response.data.user ? response.data.user.id : '';
     });
   };
 
@@ -41,7 +43,7 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
 
   $scope.signOut = function(){
     $scope.errors.login = '';
-    $http.delete('/users', { user: { token: $cookies.get('token')}}).then(successCallbackSignOutFunction);
+    $http.delete('/users/'+$scope.userId).then(successCallbackSignOutFunction);
   };
 
   $scope.calculateBasic = function(){
@@ -63,8 +65,6 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
     return $scope.showContent == 'signup' || $scope.showContent == 'signin'
   }
 
-  
-
   $scope.toggleSign = function(){
     $scope.showAuth = !$scope.showAuth;
     if($scope.showAuth){
@@ -77,10 +77,13 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
 
   $scope.toggleOperation = function(){
     $scope.isBasic = !$scope.isBasic;
+    $scope.errors.analysis = '';
+    $scope.errors.correlation = '';
   };
 
   function successCallbackSignFunction(response){
     $scope.showContent = 'content';
+    $scope.userId = response.data.id;
     $scope.user.email = '';
     $scope.user.password = '';
   };
@@ -91,6 +94,7 @@ app.controller('SignupCtrl', function($scope, $http, $cookies) {
 
   function successCallbackSignOutFunction(response){
     $scope.showContent = 'signin';
+    $scope.showAuth = false;
   };
 
   function successCallbackAnalyseFunction(response){

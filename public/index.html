@@ -18,12 +18,12 @@
     <div class="container">
       <div  ng-controller="SignupCtrl">
         <div class="auth-wraper" ng-show="showAuthTab()">
-          <ul class="auth-switcher switcher">
+          <ul>
             <li ng-class="{ current: showAuth }">
-              <a href="#" ng-click='toggleSign()'>Sign Up</a>
+              <a ng-click='toggleSign()'>Sign Up</a>
             </li>
             <li ng-class="{ current: !showAuth }">
-              <a href="#" ng-click='toggleSign()'>Login</a>
+              <a ng-click='toggleSign()'>Login</a>
             </li>
           </ul>
           <form class="auth" ng-submit="signUp()" ng-show="showContent == 'signup'">
@@ -38,7 +38,7 @@
             </div>
             <div class="for_errors">{{errors.login}}</div>
             <div class="buttons">
-              <input type="submit" class="btn btn-primary" value="Sign Up">
+              <input type="submit" class="btn btn-default" value="Sign Up">
             </div>
           </form>
           <form class="auth" ng-submit="signIn()" ng-show="showContent == 'signin'">
@@ -53,47 +53,67 @@
             </div>
             <div class="for_errors">{{errors.login}}</div>
             <div class="buttons">
-              <input type="submit" class="btn btn-primary" value="Sign In"> 
+              <input type="submit" class="btn btn-default" value="Sign In">
             </div>
           </form>
         </div>
         <div  class="calculations" ng-show="showContent == 'content'">
           <div class="user-tab">
-            <p>Hello again</p>
+            <h3>Hello</h3>
             <input type="button" ng-click='signOut()' class="btn btn-primary" value="Sign Out">
           </div>
+          <ul>
+            <li ng-class="{ current: isBasic }">
+              <a ng-click='toggleOperation()'>Basic Analysis</a>
+            </li>
+            <li ng-class="{ current: !isBasic }">
+              <a ng-click='toggleOperation()'>Correlation Check</a>
+            </li>
+          </ul>
           <div class="basic" ng-show="isBasic == true">
-            <input type="button" class="btn btn-default" value="Calc Correlation" ng-click="toggleOperation()">
-            <div class="form-group">
-            <label for="array-first">Enter an array:</label>
-            <textarea id="array-first"  class="form-control" rows="5" ng-model="arrayFirst"></textarea>
+            <div class="terms col-sm-6">
+              <p>Basic analysis include calculating of such list characteristics as minimum value,
+              maximum value, average value, median of list, first and third quartilies and outliers, if them exists.</p>
+              <p>To find out all of this charactiristics, enter a list of numbers
+              in the text field below (numbers must be divided by commas without spaces).</p>
+              <div class="form-group">
+              <label for="array-first">Enter an array:</label>
+              <textarea id="array-first"  class="form-control" rows="5" ng-model="arrayFirst" placeholder="Enter your array here"></textarea>
+              </div>
+              <div class="for_errors">{{errors.analysis}}</div>
+              <input type="button" ng-click='calculateBasic()' class="btn btn-default" value="Calculate">
             </div>
-            <div class="for_errors">{{errors.analysis}}</div>
-            <div class="for_errors">{{message}}</div>
-            <input type="button" ng-click='calculateBasic()' class="btn btn-primary" value="Calculate">
-            <hr>
-            <p>Minimun: {{analyseResult.min}}</p>
-            <p>Maximum: {{analyseResult.max}}</p>
-            <p>Mean: {{analyseResult.avg}}</p>
-            <p>Median: {{analyseResult.median}}</p>
-            <p>Q1: {{analyseResult.q1}}</p>
-            <p>Q3: {{analyseResult.q3}}</p>
-            <p>Outliers:</p><p ng-repeat="x in analyseResult.outl" >{{x}}  </p>
+            <div class="result col-sm-6">
+              <h4>Result</h4>
+              <p>Minimun: {{analyseResult.min}}</p>
+              <p>Maximum: {{analyseResult.max}}</p>
+              <p>Mean: {{analyseResult.avg}}</p>
+              <p>Median: {{analyseResult.median}}</p>
+              <p>Q1: {{analyseResult.q1}}</p>
+              <p>Q3: {{analyseResult.q3}}</p>
+              <p>Outliers: </p><p ng-repeat="x in analyseResult.outl" >{{x}}  </p>
+            </div>
           </div>
           <div class="correlation" ng-show="isBasic == false">
-            <input type="button" class="btn btn-default" value="To basic analysis" ng-click="toggleOperation()">
-            <div class="form-group">
-            <label for="array-first">Enter an array:</label>
-            <textarea id="array-first"  class="form-control" rows="5" ng-model="arrayFirst"></textarea>
+            <div class="terms col-sm-6">
+              <p>Here you can calculate correlation coeficient for two arrays. Correlation is the ...bla...</p>
+              <p>To find out correlation coeficient, enter two lists of numbers
+              in the text fields below (numbers must be divided by commas without spaces).</p>
+              <div class="form-group">
+              <label for="array-first">Enter an array:</label>
+              <textarea id="array-first"  class="form-control" rows="5" ng-model="arrayFirst" placeholder="Enter your first array here"></textarea>
+              </div>
+              <div class="form-group">
+              <label for="array-first">Enter the second array:</label>
+              <textarea id="array-first"  class="form-control" rows="5" ng-model="arraySecond" placeholder="Enter your second array here"></textarea>
+              </div>
+              <div class="for_errors">{{errors.correlation}}</div>
+              <input type="button" ng-click='calculateCorellation()' class="btn btn-default" value="Calculate">
             </div>
-            <div class="form-group">
-            <label for="array-first">Enter the second array:</label>
-            <textarea id="array-first"  class="form-control" rows="5" ng-model="arraySecond"></textarea>
+            <div class="result col-sm-6">
+              <h4>Result</h4>
+              <p>Correlation Coefficient: {{analyseResult.coef}}</p>
             </div>
-            <div class="for_errors">{{errors.correlation}}</div>
-            <input type="button" ng-click='calculateCorellation()' class="btn btn-primary" value="Calculate">
-            <hr>
-            <p>Correlation Coefficient: {{analyseResult.coef}}</p>
           </div>
         </div>
       </div>

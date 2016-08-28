@@ -87,12 +87,12 @@ class CalculationsController < ApplicationController
   end
 
   def has_space?(string)
-    string.index(/\s/) == 0
+    string[" "]
   end
 
   def check_null
     data_params.each do |set|
-      return render json: {error: "invalid data", status: 400}, status: 400 if set.nil?
+      return render json: {error: "invalid data"}, status: 400 if set.nil?
     end
   end
 

@@ -1,11 +1,6 @@
 *{
   box-sizing: border-box;
 }
-body{
-}
-.loader{
-  background: url("/images/ajax-loader.gif") no-repeat 50%;
-}
 .auth-wraper{
   display: block;
   background: #FFF;
@@ -80,24 +75,35 @@ form .form-group input{
 }
 .buttons{
   padding: 15px;pec
-  
+
 }
 .calculations{
-  width: 80%;
+  width: 100%;
   padding: 30px;
   margin: auto;
-  background: #b3c2bf;
-  border-radius: 5px;
-  box-shadow: 0 1px 1px black;
 }
 .user-tab{
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
 }
+.calculations ul{
+  max-width: 450px;
+}
+.calculations .basic, .calculations .correlation{
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+.calculations .basic p:nth-child(8), .calculations .basic p:nth-child(9){
+  display: inline-block;
+}
+.calculations .terms{
+  border-right: 1px solid #eee;
+}
 .buttons{
   text-align: center;
 }
 .btn{
-    height: 35px;
+  height: 45px;
+  width: 150px;
 }
