@@ -21,7 +21,7 @@ class UsersController < ApplicationController
         cookies[:token] = { value: @user.token, expires: 1.year.from_now }
         render json: @user, status: 200
       else
-        render json: { error: 'Error has occured while singing in'}, status: 400
+        render json: { error: 'Error has occured while signing in'}, status: 400
       end
     else
       render json: { error: 'No such user' }, status: 400
@@ -38,6 +38,8 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    unless(cookies[:token] && User.where(token: cookies[:token]).first.present?)
+      return render json: { error: "Authorization error" }, status: 401
     user = User.find(params[:id])
     if user
       cookies.delete :token
