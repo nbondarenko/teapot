@@ -2,7 +2,7 @@ class CalculationsController < ApplicationController
   before_action :check_null
 
   def analyse
-    unless(cookies[:token] && User.where(token: cookies[:token]).first.present?)
+    unless(cookies[:token])
       return render json: { error: "Authorization error" }, status: 401
     end
     respond = Hash.new
@@ -22,10 +22,9 @@ class CalculationsController < ApplicationController
   end
 
   def correlate
-    unless(cookies[:token] && User.where(token: cookies[:token]).first.present?)
+    unless(cookies[:token])
       return render json: { error: "Authorization error" }, status: 401
     end
-    respond = Hash.new
     respond = Hash.new
     valid_set = check_array(data_params[:set1]) && check_array(data_params[:set2]) && data_params[:set1].size == data_params[:set2].size
     return render json: { error: "invalid data", status: 400 }, status: 400 unless valid_set
