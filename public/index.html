@@ -27,7 +27,7 @@
               <a ng-click='toggleSign()'>Login</a>
             </li>
           </ul>
-          <form class="auth" ng-submit="signUp()" ng-show="showContent == 'signup'">
+          <form id="signup" class="auth" ng-submit="signUp()" ng-show="showContent == 'signup'">
             <p>Enter your personal details to create an acount</p>
             <div class="form-group">
               <label for="signup-email">Email</label>
@@ -42,7 +42,7 @@
               <input type="submit" class="btn btn-default" value="Sign Up">
             </div>
           </form>
-          <form class="auth" ng-submit="signIn()" ng-show="showContent == 'signin'">
+          <form id="signin" class="auth" ng-submit="signIn()" ng-show="showContent == 'signin'">
             <p>Enter your email and password to sign in</p>
             <div class="form-group">
               <label for="signup-email">Email</label>
