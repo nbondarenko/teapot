@@ -40,6 +40,7 @@ class UsersController < ApplicationController
   def destroy
     unless(cookies[:token] && User.where(token: cookies[:token]).first.present?)
       return render json: { error: "Authorization error" }, status: 401
+    end
     user = User.find(params[:id])
     if user
       cookies.delete :token
