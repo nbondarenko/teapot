@@ -1,3 +1,5 @@
+##
+#This class represents user model
 class User < ApplicationRecord
   validates :email, presence: { message: " must be filled" }
   validates :password, presence: { message: " must be filled" }

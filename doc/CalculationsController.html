@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>class CalculationsController - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link"><a href="ApplicationController.html">ApplicationController</a>
+  
+</div>
+
+    
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-i-analyse">#analyse</a>
+    
+    <li ><a href="#method-i-correlate">#correlate</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-CalculationsController">
+  <h1 id="class-CalculationsController" class="class">
+    class CalculationsController
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-analyse" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">analyse</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="analyse-source">
+            <pre><span class="ruby-comment"># File app/controllers/calculations_controller.rb, line 4</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">analyse</span>
+  <span class="ruby-keyword">unless</span>(<span class="ruby-identifier">cookies</span>[<span class="ruby-value">:token</span>])
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> { <span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;Authorization error&quot;</span> }, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">401</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">respond</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">valid_array</span> = <span class="ruby-identifier">check_array</span>(<span class="ruby-identifier">data_params</span>[<span class="ruby-value">:set1</span>])
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> { <span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;invalid data&quot;</span>, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">400</span> }, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">400</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">valid_array</span>
+  <span class="ruby-identifier">set</span> = <span class="ruby-identifier">data_params</span>[<span class="ruby-value">:set1</span>].<span class="ruby-identifier">collect</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">to_f</span>}
+  <span class="ruby-identifier">respond</span>[<span class="ruby-value">:min</span>] = <span class="ruby-identifier">set</span>.<span class="ruby-identifier">min</span>
+  <span class="ruby-identifier">respond</span>[<span class="ruby-value">:max</span>] = <span class="ruby-identifier">set</span>.<span class="ruby-identifier">max</span>
+  <span class="ruby-identifier">respond</span>[<span class="ruby-value">:avg</span>] = <span class="ruby-identifier">mean</span>(<span class="ruby-identifier">set</span>)
+  <span class="ruby-identifier">respond</span>[<span class="ruby-value">:median</span>] = <span class="ruby-identifier">median</span>(<span class="ruby-identifier">set</span>)
+  <span class="ruby-identifier">first_quartilie</span> = <span class="ruby-identifier">q1</span>(<span class="ruby-identifier">set</span>)
+  <span class="ruby-identifier">third_quartilie</span> = <span class="ruby-identifier">q3</span>(<span class="ruby-identifier">set</span>)
+  <span class="ruby-identifier">respond</span>[<span class="ruby-value">:q1</span>] = <span class="ruby-identifier">first_quartilie</span>
+  <span class="ruby-identifier">respond</span>[<span class="ruby-value">:q3</span>] = <span class="ruby-identifier">third_quartilie</span>
+  <span class="ruby-identifier">respond</span>[<span class="ruby-value">:outl</span>] = <span class="ruby-identifier">outliers</span>(<span class="ruby-identifier">set</span>, <span class="ruby-identifier">first_quartilie</span>, <span class="ruby-identifier">third_quartilie</span>)
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">answer</span><span class="ruby-operator">:</span> <span class="ruby-identifier">respond</span>}, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">200</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-correlate" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">correlate</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="correlate-source">
+            <pre><span class="ruby-comment"># File app/controllers/calculations_controller.rb, line 24</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">correlate</span>
+  <span class="ruby-keyword">unless</span>(<span class="ruby-identifier">cookies</span>[<span class="ruby-value">:token</span>])
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> { <span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;Authorization error&quot;</span> }, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">401</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">respond</span> = <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+  <span class="ruby-identifier">valid_set</span> = <span class="ruby-identifier">check_array</span>(<span class="ruby-identifier">data_params</span>[<span class="ruby-value">:set1</span>]) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">check_array</span>(<span class="ruby-identifier">data_params</span>[<span class="ruby-value">:set2</span>]) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">data_params</span>[<span class="ruby-value">:set1</span>].<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">data_params</span>[<span class="ruby-value">:set2</span>].<span class="ruby-identifier">size</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> { <span class="ruby-identifier">error</span><span class="ruby-operator">:</span> <span class="ruby-string">&quot;invalid data&quot;</span>, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">400</span> }, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">400</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">valid_set</span>
+  <span class="ruby-identifier">set1</span> = <span class="ruby-identifier">data_params</span>[<span class="ruby-value">:set1</span>].<span class="ruby-identifier">collect</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">to_f</span> }
+  <span class="ruby-identifier">set2</span> = <span class="ruby-identifier">data_params</span>[<span class="ruby-value">:set2</span>].<span class="ruby-identifier">collect</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span>.<span class="ruby-identifier">to_f</span> }
+  <span class="ruby-identifier">x_m</span> = <span class="ruby-identifier">mean</span>(<span class="ruby-identifier">set1</span>)
+  <span class="ruby-identifier">y_m</span> = <span class="ruby-identifier">mean</span>(<span class="ruby-identifier">set2</span>)
+  <span class="ruby-identifier">prod</span> = <span class="ruby-value">0</span>
+  <span class="ruby-identifier">x_sq</span> = <span class="ruby-value">0</span>
+  <span class="ruby-identifier">y_sq</span> = <span class="ruby-value">0</span>
+  <span class="ruby-identifier">set1</span>.<span class="ruby-identifier">zip</span>(<span class="ruby-identifier">set2</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">x</span>, <span class="ruby-identifier">y</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">prod</span> = <span class="ruby-identifier">prod</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">x</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">x_m</span>)<span class="ruby-operator">*</span>(<span class="ruby-identifier">y</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">y_m</span>)
+    <span class="ruby-identifier">x_sq</span> = <span class="ruby-identifier">x_sq</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">x</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">x_m</span>)<span class="ruby-operator">**</span><span class="ruby-value">2</span>
+    <span class="ruby-identifier">y_sq</span> = <span class="ruby-identifier">y_sq</span> <span class="ruby-operator">+</span> (<span class="ruby-identifier">y</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">y_m</span>)<span class="ruby-operator">**</span><span class="ruby-value">2</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">ro</span> = <span class="ruby-identifier">prod</span> <span class="ruby-operator">/</span> (<span class="ruby-constant">Math</span>.<span class="ruby-identifier">sqrt</span>(<span class="ruby-identifier">x_sq</span>)<span class="ruby-operator">*</span><span class="ruby-constant">Math</span>.<span class="ruby-identifier">sqrt</span>(<span class="ruby-identifier">y_sq</span>))
+  <span class="ruby-identifier">respond</span>[<span class="ruby-value">:coef</span>] = <span class="ruby-identifier">ro</span>
+  <span class="ruby-identifier">render</span> <span class="ruby-identifier">json</span><span class="ruby-operator">:</span> {<span class="ruby-identifier">answer</span><span class="ruby-operator">:</span> <span class="ruby-identifier">respond</span>}, <span class="ruby-identifier">status</span><span class="ruby-operator">:</span> <span class="ruby-value">200</span>
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

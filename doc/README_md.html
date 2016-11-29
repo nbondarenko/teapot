@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>README - RDoc Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+<div class="nav-section">
+  <h3>Table of Contents</h3>
+
+  <ul class="link-list" role="directory">
+    <li><a href="#label-About+Teapot+Data+Analyser">About Teapot Data Analyser</a>
+    <li><a href="#label-Demo">Demo</a>
+    <li><a href="#label-Features">Features</a>
+    <li><a href="#label-Usage">Usage</a>
+    <li><a href="#label-Setup">Setup</a>
+  </ul>
+</div>
+
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Gemfile.html">Gemfile</a>
+  
+    <li><a href="./Gemfile_lock.html">Gemfile.lock</a>
+  
+    <li><a href="./README_md.html">README</a>
+  
+    <li><a href="./Rakefile.html">Rakefile</a>
+  
+    <li><a href="./config_ru.html">config.ru</a>
+  
+    <li><a href="./public/css/style_css.html">style.css</a>
+  
+    <li><a href="./public/index_html.html">index.html</a>
+  
+    <li><a href="./public/js/app_js.html">app.js</a>
+  
+    <li><a href="./public/robots_txt.html">robots</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page README.md">
+
+<h1 id="label-About+Teapot+Data+Analyser">About <a href="Teapot.html">Teapot</a> Data Analyser<span><a href="#label-About+Teapot+Data+Analyser">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<p>This is a simple single-page application powered by Ruby on Rails and
+AngularJS that provides the main functions for data samples analysis.</p>
+
+<h2 id="label-Demo">Demo<span><a href="#label-Demo">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>Application is deployed to Heroku, so you can test it <a
+href="https://obscure-savannah-34208.herokuapp.com">here</a></p>
+
+<h2 id="label-Features">Features<span><a href="#label-Features">&para;</a> <a href="#top">&uarr;</a></span></h2>
+<ul><li>
+<p>App is based on JSON API implemented using Ruby on Rails</p>
+</li><li>
+<p>Handling responses using AngularJS</p>
+</li><li>
+<p>Simple user authorization</p>
+</li><li>
+<p>Tests using rspec gem</p>
+</li></ul>
+
+<h2 id="label-Usage">Usage<span><a href="#label-Usage">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>You can make use of the application only if you are an authorizated
+user.<br> To analyse dataset enter it in the appropriate format in the
+textarea and click on &#39;Calculate&#39; button. If errors were occured,
+check a format of input and try again. To check a correlation coeficient
+for two datasets go to Correlation check panel, enter your datasets and
+click on &#39;Calculate&#39; button.</p>
+
+<h2 id="label-Setup">Setup<span><a href="#label-Setup">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p>To launch an application on local server, you must have ruby and npm
+installed on your PC.<br> If you have, follow this instructions:<br> 1.
+Copy project from Github to your PC<br> 2. Go to the root directory and
+open terminal here.<br> 4. Run <code>bundle install</code> to install all
+the dependencies.<br> 5. Run <code>rake db:migrate</code> to create local
+database.<br> 6. Run <code>rails s</code> to start a local server.<br> Now
+you are able to access it at localhost:3000.<br> To launch tests run
+<code>rspec</code> for all and <code>rspec file_path</code> to run every
+test individually.</p>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.1.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
