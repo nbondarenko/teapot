@@ -1,3 +1,5 @@
+##
+#This class gathered operations for providing calculations
 class CalculationsController < ApplicationController
   before_action :check_null
 
